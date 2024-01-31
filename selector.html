@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #watched-list {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Watchlist</h1>
+
+    <h2>Choose Category</h2>
+    <button onclick="selectTitle('movies')">Movies</button>
+    <button onclick="selectTitle('series')">Series</button>
+
+    <h2>Selected Title</h2>
+    <p id="selected-title"></p>
+    <button onclick="addToWatched()">Watched</button>
+    <button onclick="selectRandomTitle()">Watch Random Title</button>
+
+    <h2>Watched List</h2>
+    <ul id="watched-list"></ul>
+
+    <script>
+        let titles = {
+            movies: ['Movie 1', 'Movie 2', 'Movie 3'],
+            series: ['Series 1', 'Series 2', 'Series 3']
+        };
+
+        let watchedTitles = [];
+
+        function selectTitle(category) {
+            const titleArray = titles[category];
+            const selectedTitle = titleArray[Math.floor(Math.random() * titleArray.length)];
+            document.getElementById('selected-title').innerText = selectedTitle;
+        }
+
+        function addToWatched() {
+            const selectedTitle = document.getElementById('selected-title').innerText;
+            if (selectedTitle && !watchedTitles.includes(selectedTitle)) {
+                watchedTitles.push(selectedTitle);
+                updateWatchedList();
+            }
+        }
+
+        function selectRandomTitle() {
+            const category = Math.random() < 0.5 ? 'movies' : 'series';
+            selectTitle(category);
+        }
+
+        function updateWatchedList() {
+            const watchedList = document.getElementById('watched-list');
+            watchedList.innerHTML = '';
+            watchedTitles.forEach(title => {
+                const listItem = document.createElement('li');
+                listItem.textContent = title;
+                watchedList.appendChild(listItem);
+            });
+        }
+    </script>
+
+</body>
+</html>
